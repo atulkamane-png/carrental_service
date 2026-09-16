@@ -8,6 +8,7 @@ Usage:
     python test_connection.py
 """
 from app.core.config import settings
+from pydantic_settings import BaseSettings
 from sqlalchemy import create_engine, text
 
 print(f"Connecting to {settings.DB_SERVER}/{settings.DB_NAME} ...")
