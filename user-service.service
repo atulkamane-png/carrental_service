@@ -1,0 +1,27 @@
+# ============================================================
+# Copy this file to: /etc/systemd/system/user-service.service
+# Then run:
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable user-service
+#   sudo systemctl start user-service
+#   sudo systemctl status user-service   <- check it's running
+#   journalctl -u user-service -f        <- view live logs
+# ============================================================
+
+[Unit]
+Description=User Service - AI Car Rental Platform (FastAPI)
+After=network.target
+
+[Service]
+Type=simple
+# CHANGE these two paths to match your actual VM setup:
+WorkingDirectory=/home/azureuser/car-rental-platform/services/user-service
+ExecStart=/home/azureuser/car-rental-platform/services/user-service/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+Restart=always
+RestartSec=5
+User=azureuser
+Environment="PYTHONUNBUFFERED=1"
+
+[Install]
+WantedBy=multi-user.target
